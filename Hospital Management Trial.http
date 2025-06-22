@@ -1,0 +1,6 @@
+@Hospital_Management_Trial_HostAddress = http://localhost:5114
+
+GET {{Hospital_Management_Trial_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
