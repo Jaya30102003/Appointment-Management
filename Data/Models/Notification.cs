@@ -1,0 +1,34 @@
+using System;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using Appointments.Model;
+
+namespace Notifications.Model;
+
+[Table("Notifications")]
+public class Notification
+{
+    [Key]
+    public Guid NotificationId { get; set; }
+
+    [Required]
+    [ForeignKey("Appointments")]
+    public Guid AppointmentId { get; set; }
+
+    [MaxLength(100)]
+    public string RecipientName { get; set; } // store doctorName or patientEmail
+
+
+    [MaxLength(100)]
+    public string NotificationTitle { get; set; }
+
+    [MaxLength(300)]
+    public string NotificationMessage { get; set; }
+
+    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+
+    [Required]
+    public RecipientType Recipient { get; set; }
+
+    public Appointment Appointment { get; set; }
+}

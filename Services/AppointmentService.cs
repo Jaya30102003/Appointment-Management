@@ -6,6 +6,7 @@ using Appointments.AutoMapperProfile;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Appointments.Repository;
+using Notifications.Service;
 
 namespace Appointments.Service;
 
@@ -13,10 +14,12 @@ public class AppointmentService : IAppointmentService
 {
     private readonly IAppointmentRepository _appointmentRepository;
     private readonly IMapper _mapper;
-    public AppointmentService(IAppointmentRepository appointmentRepository, IMapper mapper)
+    private readonly INotificationService _notificationService;
+    public AppointmentService(IAppointmentRepository appointmentRepository, IMapper mapper, INotificationService notificationService)
     {
         _appointmentRepository = appointmentRepository;
         _mapper = mapper;
+        _notificationService = notificationService;
     }
     public async Task<AppointmentDTO> Create(AppointmentCreateRequest request)
     {
