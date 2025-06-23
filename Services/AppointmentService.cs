@@ -26,6 +26,9 @@ public class AppointmentService : IAppointmentService
         var appointment = _mapper.Map<Appointment>(request);
         await _appointmentRepository.Add(appointment);
         var appointmentDto = _mapper.Map<AppointmentDTO>(appointment);
+        // 🔔 Notification triggers for Doctor and Patient
+        await _notificationService.CreateForDoctor(appointment.AppointmentId, "Appointment scheduled.");
+        await _notificationService.CreateForPatient(appointment.AppointmentId, "Appointment confirmed.");
         return appointmentDto;
     }
 
@@ -36,7 +39,6 @@ public class AppointmentService : IAppointmentService
     {
         throw new Exception("Product Not Found");
     }
-
     await _appointmentRepository.Delete(id); // 👈 Now properly awaited
 }
 

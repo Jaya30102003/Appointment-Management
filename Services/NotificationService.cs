@@ -22,7 +22,8 @@ public class NotificationService : INotificationService
         if (appointment == null)
             throw new InvalidOperationException("Appointment not found.");
 
-        await _repository.CreateForDoctor(appointmentId, appointment.DoctorId, message);
+        var fullMessage = $"{message} Scheduled at: {appointment.TimeSlot:f})";
+        await _repository.CreateForDoctor(appointmentId, appointment.DoctorId, fullMessage);
     }
 
     public async Task CreateForPatient(Guid appointmentId, string message)
@@ -31,7 +32,8 @@ public class NotificationService : INotificationService
         if (appointment == null)
             throw new InvalidOperationException("Appointment not found.");
 
-        await _repository.CreateForPatient(appointmentId, appointment.PatientId, message);
+        var fullMessage = $"{message} Scheduled at: {appointment.TimeSlot:f}";
+        await _repository.CreateForPatient(appointmentId, appointment.PatientId, fullMessage);
     }
 
     public async Task<IEnumerable<NotificationDTO>> GetAll()
