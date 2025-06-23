@@ -21,6 +21,7 @@ public class NotificationRepository : INotificationRepository
             {
                 NotificationId = n.NotificationId,
                 AppointmentId = n.AppointmentId,
+                RecipientId = n.RecipientId,
                 NotificationTitle = n.NotificationTitle,
                 NotificationMessage = n.NotificationMessage,
                 CreatedAt = n.CreatedAt,
@@ -40,12 +41,47 @@ public class NotificationRepository : INotificationRepository
             {
                 NotificationId = n.NotificationId,
                 AppointmentId = n.AppointmentId,
+                RecipientId = n.RecipientId,
                 NotificationTitle = n.NotificationTitle,
                 NotificationMessage = n.NotificationMessage,
                 CreatedAt = n.CreatedAt,
                 Recipient = n.Recipient
             })
             .ToListAsync();
+    }
+
+    public async Task CreateForDoctor(Guid appointmentId, Guid doctorId, string message)
+    {
+        var notification = new Notification
+        {
+            NotificationId = Guid.NewGuid(),
+            AppointmentId = appointmentId,
+            RecipientId = doctorId,
+            Recipient = RecipientType.Doctor,
+            NotificationTitle = "Doctor Notification",
+            NotificationMessage = message,
+            CreatedAt = DateTime.UtcNow
+        };
+
+        _context.Notifications.Add(notification);
+        await _context.SaveChangesAsync();
+    }
+
+    public async Task CreateForPatient(Guid appointmentId, Guid patientId, string message)
+    {
+        var notification = new Notification
+        {
+            NotificationId = Guid.NewGuid(),
+            AppointmentId = appointmentId,
+            RecipientId = patientId,
+            Recipient = RecipientType.Patient,
+            NotificationTitle = "Patient Notification",
+            NotificationMessage = message,
+            CreatedAt = DateTime.UtcNow
+        };
+
+        _context.Notifications.Add(notification);
+        await _context.SaveChangesAsync();
     }
 
     public async Task DeleteByAppointmentId(Guid appointmentId)
@@ -64,21 +100,4 @@ public class NotificationRepository : INotificationRepository
             await _context.SaveChangesAsync();
         }
     }
-
-    public async Task CreateForPatient(Guid appointmentId, string patientEmail, string message)
-{
-    var notification = new Notification
-    {
-        NotificationId = Guid.NewGuid(),
-        AppointmentId = appointmentId,
-        NotificationTitle = "Patient Notification",
-        NotificationMessage = message,
-        Recipient = RecipientType.Patient,
-        CreatedAt = DateTime.UtcNow
-    };
-
-    _context.Notifications.Add(notification);
-    await _context.SaveChangesAsync();
-}
-
 }

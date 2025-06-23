@@ -34,11 +34,11 @@ namespace Hospital_Management_Trial.Migrations
                 {
                     NotificationId = table.Column<Guid>(type: "TEXT", nullable: false),
                     AppointmentId = table.Column<Guid>(type: "TEXT", nullable: false),
-                    RecipientId = table.Column<Guid>(type: "TEXT", maxLength: 100, nullable: false),
+                    RecipientId = table.Column<Guid>(type: "TEXT", nullable: false),
                     NotificationTitle = table.Column<string>(type: "TEXT", maxLength: 100, nullable: false),
                     NotificationMessage = table.Column<string>(type: "TEXT", maxLength: 300, nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    Recipient = table.Column<int>(type: "INTEGER", nullable: false)
+                    CreatedAt = table.Column<DateTime>(type: "TEXT", nullable: false, defaultValueSql: "CURRENT_TIMESTAMP"),
+                    Recipient = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {

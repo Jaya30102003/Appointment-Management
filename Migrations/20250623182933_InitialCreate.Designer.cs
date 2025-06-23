@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Hospital_Management_Trial.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250623165027_InitialCreate")]
+    [Migration("20250623182933_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -61,7 +61,9 @@ namespace Hospital_Management_Trial.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("TEXT");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT")
+                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
                     b.Property<string>("NotificationMessage")
                         .IsRequired()
@@ -73,11 +75,11 @@ namespace Hospital_Management_Trial.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("Recipient")
-                        .HasColumnType("INTEGER");
+                    b.Property<string>("Recipient")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
                     b.Property<Guid>("RecipientId")
-                        .HasMaxLength(100)
                         .HasColumnType("TEXT");
 
                     b.HasKey("NotificationId");

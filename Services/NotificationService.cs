@@ -7,79 +7,50 @@ namespace Notifications.Service;
 
 public class NotificationService : INotificationService
 {
+    private readonly INotificationRepository _repository;
     private readonly ApplicationDbContext _context;
 
-    public NotificationService(ApplicationDbContext context)
+    public NotificationService(ApplicationDbContext context, INotificationRepository repository)
     {
         _context = context;
+        _repository = repository;
     }
 
     public async Task CreateForDoctor(Guid appointmentId, string message)
-{
-    var appointment = await _context.Appointments.FindAsync(appointmentId);
-    if (appointment == null)
-        throw new InvalidOperationException("Appointment not found.");
-
-    var notification = new Notification
     {
-        NotificationId = Guid.NewGuid(),
-        AppointmentId = appointmentId,
-        RecipientId = appointment.DoctorId,
-        Recipient = RecipientType.Doctor,
-        NotificationTitle = "Appointment Scheduled",
-        NotificationMessage = message,
-        CreatedAt = DateTime.UtcNow
-    };
+        var appointment = await _context.Appointments.FindAsync(appointmentId);
+        if (appointment == null)
+            throw new InvalidOperationException("Appointment not found.");
 
-    _context.Notifications.Add(notification);
-    await _context.SaveChangesAsync();
-}
-
+        await _repository.CreateForDoctor(appointmentId, appointment.DoctorId, message);
+    }
 
     public async Task CreateForPatient(Guid appointmentId, string message)
-{
-    var appointment = await _context.Appointments.FindAsync(appointmentId);
-    if (appointment == null)
-        throw new InvalidOperationException("Appointment not found.");
-
-    var notification = new Notification
     {
-        NotificationId = Guid.NewGuid(),
-        AppointmentId = appointmentId,
-        RecipientId = appointment.PatientId, 
-        Recipient = RecipientType.Patient,   
-        NotificationTitle = "Appointment Confirmed",
-        NotificationMessage = message,
-        CreatedAt = DateTime.UtcNow
-    };
+        var appointment = await _context.Appointments.FindAsync(appointmentId);
+        if (appointment == null)
+            throw new InvalidOperationException("Appointment not found.");
 
-    _context.Notifications.Add(notification);
-    await _context.SaveChangesAsync();
-}
-
-
-
-    public async Task<IEnumerable<NotificationDTO>> GetAllByRecipientAsync(string recipient)
-    {
-        var repo = new NotificationRepository(_context);
-        return await repo.GetAllByRecipientAsync(recipient);
+        await _repository.CreateForPatient(appointmentId, appointment.PatientId, message);
     }
 
     public async Task<IEnumerable<NotificationDTO>> GetAll()
     {
-        var repo = new NotificationRepository(_context);
-        return await repo.GetAll();
+        return await _repository.GetAll();
+    }
+
+    public async Task<IEnumerable<NotificationDTO>> GetAllByRecipientAsync(string recipient)
+    {
+        return await _repository.GetAllByRecipientAsync(recipient);
     }
 
     public async Task DeleteByAppointmentIdAsync(Guid appointmentId)
     {
-        var repo = new NotificationRepository(_context);
-        await repo.DeleteByAppointmentId(appointmentId);
+        await _repository.DeleteByAppointmentId(appointmentId);
     }
 
     public async Task DeleteByNotificationIdAsync(Guid notificationId)
     {
-        var repo = new NotificationRepository(_context);
-        await repo.DeleteByNotificationId(notificationId);
+        await _repository.DeleteByNotificationId(notificationId);
     }
 }

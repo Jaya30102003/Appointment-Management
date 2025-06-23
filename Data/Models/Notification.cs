@@ -14,8 +14,7 @@ public class Notification
     [Required]
     [ForeignKey("Appointments")]
     public Guid AppointmentId { get; set; }
-
-    [MaxLength(100)]
+    [Required]
     public Guid RecipientId { get; set; } // store doctorId or patientId
 
 

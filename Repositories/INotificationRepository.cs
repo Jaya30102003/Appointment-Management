@@ -1,12 +1,14 @@
 using Notifications.DTO;
 
-namespace Notifications.Repository;
-
-public interface INotificationRepository
+namespace Notifications.Repository
 {
-    Task CreateForPatient(Guid appointmentId, string patientEmail, string message);
-    Task<IEnumerable<NotificationDTO>> GetAll();
-    Task<IEnumerable<NotificationDTO>> GetAllByRecipientAsync(string recipient);
-    Task DeleteByAppointmentId(Guid appointmentId);
-    Task DeleteByNotificationId(Guid notificationId);
+    public interface INotificationRepository
+    {
+        Task<IEnumerable<NotificationDTO>> GetAll();
+        Task<IEnumerable<NotificationDTO>> GetAllByRecipientAsync(string recipient);
+        Task CreateForDoctor(Guid appointmentId, Guid doctorId, string message);
+        Task CreateForPatient(Guid appointmentId, Guid patientId, string message);
+        Task DeleteByAppointmentId(Guid appointmentId);
+        Task DeleteByNotificationId(Guid notificationId);
+    }
 }
