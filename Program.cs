@@ -32,7 +32,7 @@ builder.Services.AddScoped<NotificationHelper>();
 
 builder.Services.AddAutoMapper(typeof(AutoMapperProfiles));
 
-builder.Services.AddControllers();
+// builder.Services.AddControllers();
 
 builder.Services.AddControllers().AddJsonOptions(options =>
 {

@@ -12,11 +12,9 @@ public class Appointment
     [Key]
     public Guid AppointmentId { get; set; }
 
-    // public Guid PatientId { get; set; }
-    // public Guid DoctorId{ get; set; }
-    [MaxLength(50)]
-    public string PatientName { get; set; }
-
+    public Guid PatientId { get; set; }
+    public Guid DoctorId{ get; set; }
+    
     [MaxLength(120)]
     public string? Remarks { get; set; }
     public string Reason { get; set; }

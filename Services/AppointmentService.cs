@@ -30,14 +30,16 @@ public class AppointmentService : IAppointmentService
     }
 
     public async Task Delete(Guid id)
+{
+    var appointment = await _appointmentRepository.Get(id);
+    if (appointment == null)
     {
-        Appointment appointment = await _appointmentRepository.Get(id);
-        if (appointment == null)
-        {
-            throw new Exception("Product Not Found");
-        }
-        _appointmentRepository.Delete(id);
+        throw new Exception("Product Not Found");
     }
+
+    await _appointmentRepository.Delete(id); // 👈 Now properly awaited
+}
+
 
     public async Task<IEnumerable<AppointmentDTO>> GetAll()
     {

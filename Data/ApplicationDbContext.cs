@@ -23,7 +23,8 @@ public class ApplicationDbContext : DbContext
         modelBuilder.Entity<Appointment>(entity =>
         {
             entity.HasKey(a => a.AppointmentId);
-            entity.Property(a => a.PatientName).IsRequired();
+            entity.Property(a => a.PatientId).IsRequired();
+            entity.Property(a => a.DoctorId).IsRequired();
             entity.Property(a => a.Reason);
             entity.Property(a => a.Remarks);
             entity.Property(a => a.PaymentStatus);

@@ -47,10 +47,11 @@ public class AppointmentController : ControllerBase
     }
 
     [HttpDelete("{id}")]
-    public async Task<IActionResult> Delete(Guid id)
-    {
-        _appointmentService.Delete(id);
-        return NoContent();
-    }
+public async Task<IActionResult> Delete(Guid id)
+{
+    await _appointmentService.Delete(id); // 👈 Await here too
+    return NoContent();
+}
+
 
 }

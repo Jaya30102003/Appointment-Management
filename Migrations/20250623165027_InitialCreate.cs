@@ -16,7 +16,8 @@ namespace Hospital_Management_Trial.Migrations
                 columns: table => new
                 {
                     AppointmentId = table.Column<Guid>(type: "TEXT", nullable: false),
-                    PatientName = table.Column<string>(type: "TEXT", maxLength: 50, nullable: false),
+                    PatientId = table.Column<Guid>(type: "TEXT", nullable: false),
+                    DoctorId = table.Column<Guid>(type: "TEXT", nullable: false),
                     Remarks = table.Column<string>(type: "TEXT", maxLength: 120, nullable: true),
                     Reason = table.Column<string>(type: "TEXT", nullable: false),
                     PaymentStatus = table.Column<bool>(type: "INTEGER", nullable: false),
@@ -33,7 +34,7 @@ namespace Hospital_Management_Trial.Migrations
                 {
                     NotificationId = table.Column<Guid>(type: "TEXT", nullable: false),
                     AppointmentId = table.Column<Guid>(type: "TEXT", nullable: false),
-                    RecipientName = table.Column<string>(type: "TEXT", maxLength: 100, nullable: false),
+                    RecipientId = table.Column<Guid>(type: "TEXT", maxLength: 100, nullable: false),
                     NotificationTitle = table.Column<string>(type: "TEXT", maxLength: 100, nullable: false),
                     NotificationMessage = table.Column<string>(type: "TEXT", maxLength: 300, nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "TEXT", nullable: false),

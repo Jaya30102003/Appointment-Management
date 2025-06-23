@@ -16,7 +16,7 @@ public class Notification
     public Guid AppointmentId { get; set; }
 
     [MaxLength(100)]
-    public string RecipientName { get; set; } // store doctorName or patientEmail
+    public Guid RecipientId { get; set; } // store doctorId or patientId
 
 
     [MaxLength(100)]

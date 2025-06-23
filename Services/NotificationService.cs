@@ -14,38 +14,50 @@ public class NotificationService : INotificationService
         _context = context;
     }
 
-    public async Task CreateForDoctor(Guid appointmentId, string doctorName, string message)
+    public async Task CreateForDoctor(Guid appointmentId, string message)
+{
+    var appointment = await _context.Appointments.FindAsync(appointmentId);
+    if (appointment == null)
+        throw new InvalidOperationException("Appointment not found.");
+
+    var notification = new Notification
     {
-        var notification = new Notification
-        {
-            NotificationId = Guid.NewGuid(),
-            AppointmentId = appointmentId,
-            NotificationTitle = "Doctor Notification",
-            NotificationMessage = message,
-            Recipient = RecipientType.Doctor,
-            RecipientName = doctorName // or patientEmail
+        NotificationId = Guid.NewGuid(),
+        AppointmentId = appointmentId,
+        RecipientId = appointment.DoctorId,
+        Recipient = RecipientType.Doctor,
+        NotificationTitle = "Appointment Scheduled",
+        NotificationMessage = message,
+        CreatedAt = DateTime.UtcNow
+    };
 
-        };
+    _context.Notifications.Add(notification);
+    await _context.SaveChangesAsync();
+}
 
-        _context.Notifications.Add(notification);
-        await _context.SaveChangesAsync();
-    }
 
-    public async Task CreateForPatient(Guid appointmentId, string patientEmail, string message)
+    public async Task CreateForPatient(Guid appointmentId, string message)
+{
+    var appointment = await _context.Appointments.FindAsync(appointmentId);
+    if (appointment == null)
+        throw new InvalidOperationException("Appointment not found.");
+
+    var notification = new Notification
     {
-        var notification = new Notification
-        {
-            NotificationId = Guid.NewGuid(),
-            AppointmentId = appointmentId,
-            NotificationTitle = "Patient Notification",
-            NotificationMessage = message,
-            Recipient = RecipientType.Patient,
-            RecipientName = patientEmail
-        };
+        NotificationId = Guid.NewGuid(),
+        AppointmentId = appointmentId,
+        RecipientId = appointment.PatientId, 
+        Recipient = RecipientType.Patient,   
+        NotificationTitle = "Appointment Confirmed",
+        NotificationMessage = message,
+        CreatedAt = DateTime.UtcNow
+    };
 
-        _context.Notifications.Add(notification);
-        await _context.SaveChangesAsync();
-    }
+    _context.Notifications.Add(notification);
+    await _context.SaveChangesAsync();
+}
+
+
 
     public async Task<IEnumerable<NotificationDTO>> GetAllByRecipientAsync(string recipient)
     {

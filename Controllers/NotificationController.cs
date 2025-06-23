@@ -32,14 +32,14 @@ public class NotificationController : ControllerBase
     [HttpPost("doctor")]
    public async Task<IActionResult> CreateForDoctor([FromBody] DoctorNotificationRequest request)
   {
-    await _service.CreateForDoctor(request.AppointmentId, request.DoctorName, request.Message);
+    await _service.CreateForDoctor(request.AppointmentId, request.Message);
     return Ok("Doctor notification created.");
    }
 
     [HttpPost("patient")]
 public async Task<IActionResult> CreateForPatient([FromBody] PatientNotificationRequest request)
 {
-    await _service.CreateForPatient(request.AppointmentId, request.PatientEmail, request.Message);
+    await _service.CreateForPatient(request.AppointmentId, request.Message);
     return Ok("Patient notification created.");
 }
 

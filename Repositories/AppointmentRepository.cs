@@ -25,16 +25,15 @@ public class AppointmentRepository : IAppointmentRepository
         return appointment;
     }
 
-    public async void Delete(Guid id)
-    {
-        var appointment = await _appDbContext.Appointments.FindAsync(id);
-        if (appointment == null)
-        {
-            return;
-        }
-        _appDbContext.Appointments.Remove(appointment);
-        _appDbContext.SaveChangesAsync();
-    }
+    public async Task Delete(Guid id)
+{
+    var appointment = await _appDbContext.Appointments.FindAsync(id);
+    if (appointment == null) return;
+
+    _appDbContext.Appointments.Remove(appointment);
+    await _appDbContext.SaveChangesAsync();
+}
+
 
     public async Task<Appointment> Get(Guid id)
     {

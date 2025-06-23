@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Hospital_Management_Trial.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250623071421_InitialCreate")]
+    [Migration("20250623165027_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -26,9 +26,10 @@ namespace Hospital_Management_Trial.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("PatientName")
-                        .IsRequired()
-                        .HasMaxLength(50)
+                    b.Property<Guid>("DoctorId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("PatientId")
                         .HasColumnType("TEXT");
 
                     b.Property<bool>("PaymentStatus")
@@ -75,8 +76,7 @@ namespace Hospital_Management_Trial.Migrations
                     b.Property<int>("Recipient")
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("RecipientName")
-                        .IsRequired()
+                    b.Property<Guid>("RecipientId")
                         .HasMaxLength(100)
                         .HasColumnType("TEXT");
 

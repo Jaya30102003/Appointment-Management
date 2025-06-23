@@ -17,5 +17,5 @@ public interface IAppointmentRepository
 
     public Task<IEnumerable<Appointment>> GetAll();
 
-    public void Delete(Guid id);
+    public Task Delete(Guid id);
 }
