@@ -43,8 +43,10 @@ public class ApplicationDbContext : DbContext
         entity.HasOne(n => n.Appointment)
               .WithMany()
               .HasForeignKey(n => n.AppointmentId)
+              .OnDelete(DeleteBehavior.Restrict) 
               .IsRequired();
     });
 }
+
 
 }

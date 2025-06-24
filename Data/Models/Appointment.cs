@@ -12,13 +12,15 @@ public class Appointment
     [Key]
     public Guid AppointmentId { get; set; }
 
-    public Guid PatientId { get; set; }
-    public Guid DoctorId{ get; set; }
+    public string PatientId { get; set; }
+    public string DoctorId{ get; set; }
     
     [MaxLength(120)]
     public string? Remarks { get; set; }
     public string Reason { get; set; }
-    public bool PaymentStatus { get; set; }
+    public bool PaymentStatus { get; set; } = false;      
+    public bool IsCancelled { get; set; } = false;        
+
 
     public DateTime TimeSlot { get; set; }
 

@@ -27,21 +27,19 @@ public class AppointmentService : IAppointmentService
         await _appointmentRepository.Add(appointment);
         var appointmentDto = _mapper.Map<AppointmentDTO>(appointment);
         // 🔔 Notification triggers for Doctor and Patient
-        await _notificationService.CreateForDoctor(appointment.AppointmentId, "Appointment scheduled.");
-        await _notificationService.CreateForPatient(appointment.AppointmentId, "Appointment confirmed.");
+        await _notificationService.CreateForDoctor(appointment.AppointmentId, "Appointment Requested.");
+        await _notificationService.CreateForPatient(appointment.AppointmentId, "Appointment Request Send.");
         return appointmentDto;
     }
 
     public async Task Delete(Guid id)
-{
-    var appointment = await _appointmentRepository.Get(id);
-    if (appointment == null)
     {
-        throw new Exception("Product Not Found");
-    }
-    await _appointmentRepository.Delete(id); // 👈 Now properly awaited
-}
+        var appointment = await _appointmentRepository.Get(id);
+        if (appointment == null)
+            throw new Exception("Appointment not found.");
 
+        await _appointmentRepository.Delete(id);
+    }
 
     public async Task<IEnumerable<AppointmentDTO>> GetAll()
     {
@@ -55,6 +53,30 @@ public class AppointmentService : IAppointmentService
         var appointment = await _appointmentRepository.Get(id);
         var appointmentDto = _mapper.Map<AppointmentDTO>(appointment);
         return appointmentDto;
+    }
+
+    public async Task Approve(Guid appointmentId)
+    {
+        var appointment = await _appointmentRepository.Get(appointmentId);
+        if (appointment == null) throw new Exception("Appointment not found");
+
+        appointment.PaymentStatus = true;
+        await _appointmentRepository.Update(appointment);
+
+        await _notificationService.CreateForDoctor(appointment.AppointmentId, "Appointment Scheduled.");
+        await _notificationService.CreateForPatient(appointment.AppointmentId, "Appointment Schedule Confirmed by Doctor.");
+    }       
+
+public async Task Cancel(Guid appointmentId)
+    {
+        var appointment = await _appointmentRepository.Get(appointmentId);
+        if (appointment == null) throw new Exception("Appointment not found");
+
+        appointment.IsCancelled = true;
+        await _appointmentRepository.Update(appointment);
+
+        await _notificationService.CreateForDoctor(appointment.AppointmentId, "Appointment cancelled.");
+        await _notificationService.CreateForPatient(appointment.AppointmentId, "Appointment cancelled.");
     }
 
 }

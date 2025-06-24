@@ -17,6 +17,8 @@ public class AppointmentController : ControllerBase
     {
         _appointmentService = appointmentService;
     }
+
+    // Appointment Creation 
     [HttpPost]
     public async Task<IActionResult> Create([FromBody] AppointmentCreateRequest request)
     {
@@ -28,6 +30,7 @@ public class AppointmentController : ControllerBase
         return CreatedAtAction(nameof(GetById), new { id = result.AppointmentId }, new ApiResponse<AppointmentDTO>(true, "Product Created Successfully", result));
     }
 
+    //Appointment Retrieval through appointment Id
     [HttpGet("{id}")]
     public async Task<IActionResult> GetById(Guid id)
     {
@@ -39,6 +42,7 @@ public class AppointmentController : ControllerBase
         return Ok(new ApiResponse<AppointmentDTO>(true, "Appointment Found", result));
     }
 
+    //Appointment Retrieval Completely
     [HttpGet]
     public async Task<IActionResult> GetAll()
     {
@@ -46,12 +50,28 @@ public class AppointmentController : ControllerBase
         return Ok(new ApiResponse<IEnumerable<AppointmentDTO>>(true, "Appointments List Fetched Sucessfully", result));
     }
 
+    // Appointment Deletion through Retrival using Appointment Id
     [HttpDelete("{id}")]
-public async Task<IActionResult> Delete(Guid id)
-{
-    await _appointmentService.Delete(id); // 👈 Await here too
-    return NoContent();
-}
+    public async Task<IActionResult> Delete(Guid id)
+    {
+        await _appointmentService.Delete(id); // 👈 Await here too
+        return NoContent();
+    }
 
+    // Doctor Priviledges For Appointment Approval
+    [HttpPut("{id}/approve")]
+    public async Task<IActionResult> Approve(Guid id)
+    {
+        await _appointmentService.Approve(id);
+        return Ok("Appointment approved and notifications sent.");
+    }
+
+    // Doctor and Patient Privildegs for Appointment Cancellation
+    [HttpPut("{id}/cancel")]
+    public async Task<IActionResult> Cancel(Guid id)
+    {
+        await _appointmentService.Cancel(id);
+        return Ok("Appointment cancelled and notifications sent.");
+    }
 
 }

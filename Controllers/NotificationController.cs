@@ -17,18 +17,21 @@ public class NotificationController : ControllerBase
         _service = service;
     }
 
+    // Retrieval of all Notifications 
     [HttpGet]
     public async Task<ActionResult<IEnumerable<NotificationDTO>>> GetAll()
     {
         return Ok(await _service.GetAll());
     }
 
+    // Getting Notifications based on Recipient : Doctor / Patient
     [HttpGet("recipient/{recipient}")]
     public async Task<ActionResult<IEnumerable<NotificationDTO>>> GetByRecipient(string recipient)
     {
         return Ok(await _service.GetAllByRecipientAsync(recipient));
     }
 
+    // Doctor notification creation
     [HttpPost("doctor")]
    public async Task<IActionResult> CreateForDoctor([FromBody] DoctorNotificationRequest request)
   {
@@ -36,6 +39,7 @@ public class NotificationController : ControllerBase
     return Ok("Doctor notification created.");
    }
 
+   // Patient Notification creation
     [HttpPost("patient")]
 public async Task<IActionResult> CreateForPatient([FromBody] PatientNotificationRequest request)
 {
@@ -43,7 +47,7 @@ public async Task<IActionResult> CreateForPatient([FromBody] PatientNotification
     return Ok("Patient notification created.");
 }
 
-
+// Notification deletion based on appointment id
     [HttpDelete("appointment/{appointmentId}")]
     public async Task<IActionResult> DeleteByAppointmentId(Guid appointmentId)
     {
@@ -51,6 +55,7 @@ public async Task<IActionResult> CreateForPatient([FromBody] PatientNotification
         return NoContent();
     }
 
+    // Notification deletion based on Notification id
     [HttpDelete("{notificationId}")]
     public async Task<IActionResult> DeleteByNotificationId(Guid notificationId)
     {

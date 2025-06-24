@@ -18,4 +18,6 @@ public interface IAppointmentRepository
     public Task<IEnumerable<Appointment>> GetAll();
 
     public Task Delete(Guid id);
+
+    public Task<Appointment> Update(Appointment appointment);
 }

@@ -23,10 +23,15 @@ namespace Hospital_Management_Trial.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
-                    b.Property<Guid>("DoctorId")
+                    b.Property<string>("DoctorId")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<Guid>("PatientId")
+                    b.Property<bool>("IsCancelled")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("PatientId")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<bool>("PaymentStatus")
@@ -76,7 +81,8 @@ namespace Hospital_Management_Trial.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<Guid>("RecipientId")
+                    b.Property<string>("RecipientId")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasKey("NotificationId");
@@ -91,7 +97,7 @@ namespace Hospital_Management_Trial.Migrations
                     b.HasOne("Appointments.Model.Appointment", "Appointment")
                         .WithMany()
                         .HasForeignKey("AppointmentId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Appointment");

@@ -50,7 +50,7 @@ public class NotificationRepository : INotificationRepository
             .ToListAsync();
     }
 
-    public async Task CreateForDoctor(Guid appointmentId, Guid doctorId, string message)
+    public async Task CreateForDoctor(Guid appointmentId, string doctorId, string message)
     {
         var notification = new Notification
         {
@@ -67,7 +67,7 @@ public class NotificationRepository : INotificationRepository
         await _context.SaveChangesAsync();
     }
 
-    public async Task CreateForPatient(Guid appointmentId, Guid patientId, string message)
+    public async Task CreateForPatient(Guid appointmentId, string patientId, string message)
     {
         var notification = new Notification
         {

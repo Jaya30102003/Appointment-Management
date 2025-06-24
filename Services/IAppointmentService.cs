@@ -13,4 +13,8 @@ public interface IAppointmentService
     public Task<IEnumerable<AppointmentDTO>> GetAll();
 
     public Task Delete(Guid id);
+
+    public Task Approve(Guid appointmentId);
+
+    public Task Cancel(Guid appointmentId);
 }
