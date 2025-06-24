@@ -1,6 +1,7 @@
 using Appointments.DTO;
 using Appointments.Model;
 using Appointments.Request;
+using Notifications.DTO;
 
 namespace Appointments.Service;
 

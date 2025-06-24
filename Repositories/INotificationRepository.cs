@@ -10,5 +10,7 @@ namespace Notifications.Repository
         Task CreateForPatient(Guid appointmentId, string patientId, string message);
         Task DeleteByAppointmentId(Guid appointmentId);
         Task DeleteByNotificationId(Guid notificationId);
+        Task<IEnumerable<NotificationDTO>> GetAllByRecipientAndIdAsync(string recipientType, string recipientId);
+
     }
 }

@@ -100,4 +100,25 @@ public class NotificationRepository : INotificationRepository
             await _context.SaveChangesAsync();
         }
     }
+
+    public async Task<IEnumerable<NotificationDTO>> GetAllByRecipientAndIdAsync(string recipientType, string recipientId)
+{
+    if (!Enum.TryParse<RecipientType>(recipientType, true, out var recipientEnum))
+        return new List<NotificationDTO>();
+
+    return await _context.Notifications
+        .Where(n => n.Recipient == recipientEnum && n.RecipientId == recipientId)
+        .Select(n => new NotificationDTO
+        {
+            NotificationId = n.NotificationId,
+            AppointmentId = n.AppointmentId,
+            RecipientId = n.RecipientId,
+            NotificationTitle = n.NotificationTitle,
+            NotificationMessage = n.NotificationMessage,
+            CreatedAt = n.CreatedAt,
+            Recipient = n.Recipient
+        })
+        .ToListAsync();
+}
+
 }

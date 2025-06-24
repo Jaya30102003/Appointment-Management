@@ -55,4 +55,11 @@ public class NotificationService : INotificationService
     {
         await _repository.DeleteByNotificationId(notificationId);
     }
+
+    public async Task<IEnumerable<NotificationDTO>> GetByRecipientAndIdAsync(string recipientType, string recipientId)
+{
+    var all = await _repository.GetAllByRecipientAndIdAsync(recipientType, recipientId);
+    return all;
+}
+
 }

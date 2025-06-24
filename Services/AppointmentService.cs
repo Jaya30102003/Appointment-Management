@@ -78,5 +78,6 @@ public async Task Cancel(Guid appointmentId)
         await _notificationService.CreateForDoctor(appointment.AppointmentId, "Appointment cancelled.");
         await _notificationService.CreateForPatient(appointment.AppointmentId, "Appointment cancelled.");
     }
+    
 
 }

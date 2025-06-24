@@ -10,4 +10,6 @@ public interface INotificationService
     Task<IEnumerable<NotificationDTO>> GetAll();
     Task DeleteByAppointmentIdAsync(Guid appointmentId);
     Task DeleteByNotificationIdAsync(Guid notificationId);
+    
+    Task<IEnumerable<NotificationDTO>> GetByRecipientAndIdAsync(string recipientType, string recipientId);
 }

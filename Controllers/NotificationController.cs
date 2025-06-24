@@ -33,21 +33,21 @@ public class NotificationController : ControllerBase
 
     // Doctor notification creation
     [HttpPost("doctor")]
-   public async Task<IActionResult> CreateForDoctor([FromBody] DoctorNotificationRequest request)
-  {
-    await _service.CreateForDoctor(request.AppointmentId, request.Message);
-    return Ok("Doctor notification created.");
-   }
+    public async Task<IActionResult> CreateForDoctor([FromBody] DoctorNotificationRequest request)
+    {
+        await _service.CreateForDoctor(request.AppointmentId, request.Message);
+        return Ok("Doctor notification created.");
+    }
 
-   // Patient Notification creation
+    // Patient Notification creation
     [HttpPost("patient")]
-public async Task<IActionResult> CreateForPatient([FromBody] PatientNotificationRequest request)
-{
-    await _service.CreateForPatient(request.AppointmentId, request.Message);
-    return Ok("Patient notification created.");
-}
+    public async Task<IActionResult> CreateForPatient([FromBody] PatientNotificationRequest request)
+    {
+        await _service.CreateForPatient(request.AppointmentId, request.Message);
+        return Ok("Patient notification created.");
+    }
 
-// Notification deletion based on appointment id
+    // Notification deletion based on appointment id
     [HttpDelete("appointment/{appointmentId}")]
     public async Task<IActionResult> DeleteByAppointmentId(Guid appointmentId)
     {
@@ -62,4 +62,12 @@ public async Task<IActionResult> CreateForPatient([FromBody] PatientNotification
         await _service.DeleteByNotificationIdAsync(notificationId);
         return NoContent();
     }
+    
+    [HttpGet("recipient/{recipient}/id/{recipientId}")]
+public async Task<ActionResult<IEnumerable<NotificationDTO>>> GetByRecipientAndId(string recipient, string recipientId)
+{
+    var notifications = await _service.GetByRecipientAndIdAsync(recipient, recipientId);
+    return Ok(notifications);
+}
+
 }
