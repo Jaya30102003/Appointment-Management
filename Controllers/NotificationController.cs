@@ -4,7 +4,7 @@ using Notifications.Repository;
 using Notifications.Request;
 using Notifications.Service;
 
-namespace Notifications.Controller;
+namespace Notifications.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]

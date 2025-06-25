@@ -1,0 +1,38 @@
+@model IEnumerable<Notifications.DTO.NotificationDTO>
+
+@{
+    ViewData["Title"] = "Notifications";
+}
+
+<h2>Notifications</h2>
+
+@if (ViewData["Error"] != null)
+{
+    <p style="color:red;">@ViewData["Error"]</p>
+}
+else if (Model != null && Model.Any())
+{
+    <table border="1" cellpadding="8" cellspacing="0">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Message</th>
+                <th>Time</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var notification in Model.OrderByDescending(n => n.CreatedAt))
+            {
+                <tr>
+                    <td>@notification.NotificationTitle</td>
+                    <td>@notification.NotificationMessage</td>
+                    <td>@notification.CreatedAt</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else if (Model != null)
+{
+    <p>No notifications found for the selected user.</p>
+}

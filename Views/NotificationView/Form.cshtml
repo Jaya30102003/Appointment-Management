@@ -1,0 +1,53 @@
+@model IEnumerable<Notifications.DTO.NotificationDTO>
+
+@{
+    ViewData["Title"] = "Search Notifications";
+}
+
+<h2>🔍 View Notifications</h2>
+
+<form asp-action="Form" asp-controller="NotificationView" method="post">
+    <label for="recipient">Recipient Type:</label>
+    <select name="recipient" id="recipient" name="recipient">
+        <option value="Doctor">Doctor</option>
+        <option value="Patient">Patient</option>
+    </select>
+
+    <label for="recipientId">Recipient ID:</label>
+    <input type="text" name="recipientId" id="recipientId" name="recipientId" required />
+
+    <button type="submit">Fetch</button>
+</form>
+
+<hr />
+
+@if (ViewData["Error"] != null)
+{
+    <p style="color:red;">@ViewData["Error"]</p>
+}
+else if (Model != null && Model.Any())
+{
+    <table border="1" cellpadding="8" cellspacing="0">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Message</th>
+                <th>Time</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var n in Model.OrderByDescending(n => n.CreatedAt))
+            {
+                <tr>
+                    <td>@n.NotificationTitle</td>
+                    <td>@n.NotificationMessage</td>
+                    <td>@n.CreatedAt.ToLocalTime().ToString("g")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else if (Model != null)
+{
+    <p>No notifications found.</p>
+}

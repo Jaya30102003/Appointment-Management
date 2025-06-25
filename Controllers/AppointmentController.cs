@@ -4,7 +4,7 @@ using Appointments.Api.Data.Responses;
 using Appointments.Service;
 using Appointments.DTO;
 
-namespace Appointments.Controller;
+namespace Appointments.Controllers;
 
 
 [ApiController]

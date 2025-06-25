@@ -306,3 +306,5 @@ C:\Users\u499129\Desktop\Hospital Management Trial\obj\Debug\net9.0\refint\Hospi
 C:\Users\u499129\Desktop\Hospital Management Trial\obj\Debug\net9.0\Hospital Management Trial.pdb
 C:\Users\u499129\Desktop\Hospital Management Trial\obj\Debug\net9.0\Hospital Management Trial.genruntimeconfig.cache
 C:\Users\u499129\Desktop\Hospital Management Trial\obj\Debug\net9.0\ref\Hospital Management Trial.dll
+C:\Users\u499129\Desktop\Hospital Management Trial\obj\Debug\net9.0\Hospital Management Trial.RazorAssemblyInfo.cache
+C:\Users\u499129\Desktop\Hospital Management Trial\obj\Debug\net9.0\Hospital Management Trial.RazorAssemblyInfo.cs

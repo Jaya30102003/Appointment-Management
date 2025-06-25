@@ -1,6 +1,6 @@
 using System;
 using AutoMapper;
-using Appointments.Controller;
+using Appointments.Controllers;
 using Appointments.DTO;
 using Appointments.Model;
 using Appointments.Request;
