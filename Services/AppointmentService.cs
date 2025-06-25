@@ -38,6 +38,7 @@ public class AppointmentService : IAppointmentService
         if (appointment == null)
             throw new Exception("Appointment not found.");
 
+        await _notificationService.DeleteByAppointmentIdAsync(id);
         await _appointmentRepository.Delete(id);
     }
 
